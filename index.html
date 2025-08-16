@@ -5,23 +5,60 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Audiobook Ebook</title>
 <style>
-body {
+body, html {
   margin:0;
   padding:0;
-  background:#f2f2f2;
+  width:100%;
+  height:100%;
   font-family:Arial,sans-serif;
+  overflow:hidden;
+}
+
+/* خلفية flou تربوية */
+body::before {
+  content:'';
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-image:url('background-educative.jpg'); /* ضع هنا صورة تربوية */
+  background-size:cover;
+  background-position:center;
+  filter:blur(8px);
+  z-index:-1;
+}
+
+/* صفحة تسجيل الدخول */
+#loginPage {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
+  background:rgba(0,0,0,0.5);
+  flex-direction:column;
 }
+#loginPage input {
+  padding:10px;
+  margin:5px;
+  width:200px;
+}
+#loginPage button {
+  padding:10px 20px;
+  margin-top:10px;
+}
+
+/* الكتاب */
 #book {
   width:360px;
   height:640px;
   position:relative;
-  overflow:auto; /* pour scroll si audios très hauts */
+  overflow:auto;
   background:#fff;
   box-shadow:0 0 20px rgba(0,0,0,0.5);
+  display:none; /* سيتم إظهاره بعد تسجيل الدخول */
 }
 .page {
   width:100%;
@@ -77,155 +114,62 @@ body {
 </head>
 <body>
 
+<!-- صفحة تسجيل الدخول -->
+<div id="loginPage">
+  <h2>Connexion</h2>
+  <input type="email" id="adamsmithcontact1@gmail.com" placeholder="Email">
+  <input type="password" id="1234" placeholder="Mot de passe">
+  <button onclick="login()">Se connecter</button>
+</div>
+
 <div id="book">
-  <!-- Page 1 GIF -->
+  <!-- ضع هنا كل صفحات الكتاب كما في كودك الأصلي -->
   <div class="page active" id="Page1" style="background-image:url('Page1.gif');"></div>
-
-  <!-- Page 2 -->
-  <div class="page" id="Page2" style="background-image:url('Page2.jpg');">
-    <audio class="audio-custom" src="assets/audio/p2-1.wav" controls style="top:350px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-  </div>
-
-  <!-- Page 3 -->
-  <div class="page" id="Page3" style="background-image:url('Page3.jpg');">
-    <audio class="audio-custom" src="ch1.wav" controls style="top:350px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-  </div>
-
-  <!-- Page 4 -->
-  <div class="page" id="Page4" style="background-image:url('Page4.jpg');">
-    <audio class="audio-custom" src="Axe1 ch1.wav" controls style="top:90px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-
-    <audio class="audio-custom" src="Axe2 ch1.wav" controls style="top:230px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-
-    <audio class="audio-custom" src="Axe3 ch1.wav" controls style="top:380px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-
-    <audio class="audio-custom" src="Axe4 ch1.wav" controls style="top:520px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-  </div>
-
-  <!-- Page 5 -->
-  <div class="page" id="Page5" style="background-image:url('Page5.jpg');">
-    <audio class="audio-custom" src="assets/audio/p5-1.wav" controls style="top:350px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-  </div>
-
-  <!-- Page 6 -->
-  <div class="page" id="Page6" style="background-image:url('Page6.jpg');">
-    <audio class="audio-custom" src="Axe1 ch2.wav" controls style="top:150px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-
-    <audio class="audio-custom" src="Axe2 ch2.wav" controls style="top:450px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-  </div>
-
-  <!-- Page 7 -->
-  <div class="page" id="Page7" style="background-image:url('Page7.jpg');">
-    <audio class="audio-custom" src="ch3 intro.wav" controls style="top:350px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-  </div>
-
-  <!-- Page 8 -->
-  <div class="page" id="Page8" style="background-image:url('Page8.jpg');">
-    <audio class="audio-custom" src="Axe1 ch3.wav" controls style="top:150px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-
-    <audio class="audio-custom" src="Axe2 ch3.wav" controls style="top:450px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-  </div>
-
-  <!-- Page 9 -->
-  <div class="page" id="Page9" style="background-image:url('Page9.jpg');">
-    <audio class="audio-custom" src="C4 intro.wav" controls style="top:350px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-  </div>
-
-  <!-- Page 10 -->
-  <div class="page" id="Page10" style="background-image:url('Page10.jpg');">
-    <audio class="audio-custom" src="Axe1 ch4.wav" controls style="top:150px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-    <audio class="audio-custom" src="Axe ch4.wav" controls style="top:450px;"></audio>
-    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
-      <option value="0.5">0.5x</option><option value="1" selected>1x</option>
-      <option value="1.5">1.5x</option><option value="2">2x</option>
-    </select>
-  </div>
-
-  <!-- Page 11 -->
-  <div class="page" id="Page11" style="background-image:url('Page11.jpg');"></div>
-
-  <!-- Page 12 -->
-  <div class="page" id="Page12" style="background-image:url('Page12.jpg');"></div>
-
-  <!-- Flèches -->
+  <!-- باقي الصفحات ... -->
   <div class="nav-arrow" id="prevArrow">&#8593;</div>
   <div class="nav-arrow" id="nextArrow">&#8595;</div>
 </div>
 
 <script>
+// قائمة المستخدمين (مؤقتة عبر JS)
+const users = [
+  { email: 'user1@example.com', password: 'pass123' },
+  { email: 'user2@example.com', password: 'pass456' }
+];
+
+// تسجيل الدخول
+function login() {
+  const email = document.getElementById('email').value;
+  const pass = document.getElementById('password').value;
+  const user = users.find(u => u.email === email && u.password === pass);
+  if(user){
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('book').style.display = 'block';
+  } else {
+    alert('Email ou mot de passe incorrect');
+  }
+}
+
+// تعطيل زر الفأرة وInspect
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  if(e.ctrlKey && (e.key==='u' || e.key==='s' || e.key==='i')) e.preventDefault();
+});
+
+// عرض الصفحات
 const pages=document.querySelectorAll('.page');
 let current=0;
-
 function showPage(index){
   pages.forEach((p,i)=>i===index?p.classList.add('active'):p.classList.remove('active'));
 }
-
 document.getElementById('nextArrow').addEventListener('click',()=>{
   if(current<pages.length-1) current++;
   showPage(current);
 });
-
 document.getElementById('prevArrow').addEventListener('click',()=>{
   if(current>0) current--;
   showPage(current);
 });
-
 // Swipe mobile
 let startY=0;
 const book=document.getElementById('book');
@@ -235,8 +179,9 @@ book.addEventListener('touchend',e=>{
   if(startY-endY>50 && current<pages.length-1){ current++; showPage(current);}
   if(endY-startY>50 && current>0){ current--; showPage(current);}
 });
-
 document.addEventListener('DOMContentLoaded',()=>showPage(current));
+
+/* ملاحظة: لتقييد تشغيل الكتاب على جهازين فقط، يجب استخدام سيرفر لتخزين الأجهزة لكل مستخدم */
 </script>
 
 </body>

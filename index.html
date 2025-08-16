@@ -108,3 +108,70 @@ const pages=document.querySelectorAll('.page'); let current=0; function showPage
 </body>
 </html>
 
+
+
+<!-- أضف هذا في <head> -->
+<style>
+  /* الخلفية flou تربوية */
+  body {
+    background-image: url('background-educative.jpg'); /* ضع صورة تربوية هنا */
+    background-size: cover;
+    background-position: center;
+    filter: blur(5px);
+  }
+
+  /* صفحة تسجيل الدخول */
+  #loginScreen {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255,255,255,0.9);
+    display: flex; justify-content: center; align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+  }
+
+  #loginScreen input {
+    margin: 5px; padding: 10px; font-size: 16px;
+  }
+
+  #loginScreen button {
+    padding: 10px 20px; font-size: 16px; cursor: pointer;
+  }
+</style>
+
+<!-- أضف هذا في <body> في بداية الكود -->
+<div id="loginScreen">
+  <h2>تسجيل الدخول</h2>
+  <input type="email" id="email" placeholder="البريد الإلكتروني">
+  <input type="password" id="password" placeholder="كلمة السر">
+  <button onclick="login()">دخول</button>
+  <p id="loginMsg" style="color:red;"></p>
+</div>
+
+<script>
+  // بيانات مؤقتة لتسجيل الدخول
+  const tempUser = {
+    email: "user@example.com",
+    password: "123456"
+  };
+
+  function login() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const msg = document.getElementById('loginMsg');
+
+    if(email === tempUser.email && password === tempUser.password){
+      document.getElementById('loginScreen').style.display = 'none';
+    } else {
+      msg.innerText = "البريد الإلكتروني أو كلمة السر غير صحيحة!";
+    }
+  }
+
+  // تعطيل زر الفأرة و Inspect Element
+  document.addEventListener('contextmenu', e => e.preventDefault()); // زر يمين الفأرة
+  document.addEventListener('keydown', function(e) {
+    if(e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J"))){
+      e.preventDefault();
+    }
+  });
+</script>

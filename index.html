@@ -110,28 +110,23 @@ const pages=document.querySelectorAll('.page'); let current=0; function showPage
 
 
 
-<!-- أضف هذا في <head> -->
-<style>
-  /* صفحة تسجيل الدخول */
-  #loginScreen {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(255,255,255,0.9);
-    display: flex; justify-content: center; align-items: center;
-    flex-direction: column;
-    z-index: 9999;
-  }
 
-  #loginScreen input {
-    margin: 5px; padding: 10px; font-size: 16px;
-  }
-
-  #loginScreen button {
-    padding: 10px 20px; font-size: 16px; cursor: pointer;
-  }
+/* شاشة تسجيل الدخول */
+#loginScreen {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(255,255,255,0.95);
+  display: flex; justify-content: center; align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+}
+#loginScreen input { margin: 5px; padding: 10px; font-size: 16px; }
+#loginScreen button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
 </style>
+</head>
+<body>
 
-<!-- أضف هذا في <body> في بداية الكود -->
+<!-- شاشة تسجيل الدخول -->
 <div id="loginScreen">
   <h2>تسجيل الدخول</h2>
   <input type="email" id="email" placeholder="البريد الإلكتروني">
@@ -140,24 +135,44 @@ const pages=document.querySelectorAll('.page'); let current=0; function showPage
   <p id="loginMsg" style="color:red;"></p>
 </div>
 
-  <script>
-  function login() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const msg = document.getElementById('loginMsg');
+<!-- الكتاب -->
+<div id="book">
+  <div class="page active" id="Page1" style="background-image:url('Page1.gif');"></div>
+  <div class="page" id="Page2" style="background-image:url('Page2.jpg');">
+    <audio class="audio-custom" src="P1 intro.wav" controls style="top:350px;"></audio>
+    <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
+      <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+    </select>
+  </div>
+  <!-- باقي الصفحات ديالك هنا بنفس الكود اللي كان -->
+  <div class="nav-arrow" id="prevArrow">&#8593;</div>
+  <div class="nav-arrow" id="nextArrow">&#8595;</div>
+</div>
 
-    if(email === tempUser.email && password === tempUser.password){
-      document.getElementById('loginScreen').style.display = 'none';
-    } else {
-      msg.innerText = "البريد الإلكتروني أو كلمة السر غير صحيحة!";
-    }
+<script>
+// تعريف بيانات المستخدم
+const tempUser = {
+  email: "test@test.com",
+  password: "1234"
+};
+
+function login() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const msg = document.getElementById('loginMsg');
+
+  if(email === tempUser.email && password === tempUser.password){
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('book').style.display = 'block';
+  } else {
+    msg.innerText = "البريد الإلكتروني أو كلمة السر غير صحيحة!";
   }
+}
 
-  // تعطيل زر الفأرة و Inspect Element
-  document.addEventListener('contextmenu', e => e.preventDefault()); // زر يمين الفأرة
-  document.addEventListener('keydown', function(e) {
-    if(e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J"))){
-      e.preventDefault();
-    }
-  });
-</script>
+// منع زر الفأرة يمين + Inspect Element
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', function(e) {
+  if(e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J"))){
+    e.preventDefault();
+  }
+});

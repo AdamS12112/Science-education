@@ -153,19 +153,21 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// فقط إعادة تعيين التوقيت للأصوات، بدون تشغيل تلقائي
-audios.forEach(a => { 
-    a.currentTime = 0;
+// --------------------- إصلاح السكربت هنا ---------------------
+const pages = document.querySelectorAll('.page');
+let current = 0;
 
 function showPage(index) {
     pages.forEach((p,i)=>{
         const audios = p.querySelectorAll('audio');
         if(i===index){
             p.classList.add('active');
+            // تشغيل/تهيئة أصوات الصفحة الحالية فقط
             audios.forEach(a=>{ a.currentTime=0; a.play(); });
         } else {
             p.classList.remove('active');
-            audios.forEach(a=>a.pause());
+            // إيقاف أصوات الصفحات الأخرى
+            audios.forEach(a=>{ a.pause(); a.currentTime=0; });
         }
     });
 }
@@ -189,7 +191,9 @@ book.addEventListener('touchend',e=>{
     if(endY-startY>50 && current>0){ current--; showPage(current);}
 });
 
+// تشغيل الصفحة الأولى
 document.addEventListener('DOMContentLoaded',()=>showPage(current));
+// -------------------------------------------------------------
 </script>
 </body>
 </html>

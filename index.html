@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Audiobook Ebook</title>
 <style>
-body { margin:0; padding:0; background:#f2f2f2; font-family:Arial,sans-serif; display:flex; justify-content:center; align-items:center; height:100vh; }
-#book { width:360px; height:640px; position:relative; overflow:auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.5); }
-.page { width:100%; height:100%; background-size:cover; background-position:center; position:absolute; top:0; left:0; display:none; flex-direction:column; justify-content:flex-start; padding:10px; box-sizing:border-box; transition:transform 0.6s ease, opacity 0.6s ease; opacity:0; }
-.page.active { display:flex; opacity:1; transform:translateY(0); }
-.page audio.audio-custom { position:absolute; left:50%; transform:translateX(-50%); }
-.audio-speed { position:absolute; left:50%; transform:translateX(-50%); margin-top:5px; }
+body { margin:0; padding:0; background:#f2f2f2; font-family:Arial,sans-serif; display:flex; justify-content:center; align-items:center; min-height:100vh; }
+#book { width:360px; height:640px; position:relative; overflow:hidden; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.5); }
+.page { width:100%; height:100%; background-size:cover; background-position:center; position:absolute; top:0; left:0; display:none; flex-direction:column; justify-content:flex-start; padding:10px; box-sizing:border-box; transition:opacity 0.6s ease; opacity:0; }
+.page.active { display:flex; opacity:1; }
+.page audio.audio-custom { position:absolute; left:50%; transform:translateX(-50%); z-index:10; }
+.audio-speed { position:absolute; left:50%; transform:translateX(-50%); margin-top:5px; z-index:10; }
 .nav-arrow { position:absolute; top:50%; transform:translateY(-50%); font-size:32px; color:green; background:rgba(255,255,255,0.7); border-radius:50%; width:50px; height:50px; line-height:46px; text-align:center; cursor:pointer; user-select:none; z-index:1000; }
 #prevArrow { left:10px; }
 #nextArrow { right:10px; }
-/* صفحة تسجيل الدخول */
+/* Écran de connexion */
 #loginScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); display: flex; justify-content: center; align-items: center; flex-direction: column; z-index: 9999; }
 #loginScreen input { margin: 5px; padding: 10px; font-size: 16px; }
 #loginScreen button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
@@ -22,12 +22,12 @@ body { margin:0; padding:0; background:#f2f2f2; font-family:Arial,sans-serif; di
 </head>
 <body>
 
-<!-- شاشة تسجيل الدخول -->
+<!-- Écran de connexion -->
 <div id="loginScreen">
-<h2>تسجيل الدخول</h2>
-<input type="email" id="email" placeholder="البريد الإلكتروني">
-<input type="password" id="password" placeholder="كلمة السر">
-<button onclick="login()">دخول</button>
+<h2>Connexion</h2>
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Mot de passe">
+<button onclick="login()">Se connecter</button>
 <p id="loginMsg" style="color:red;"></p>
 </div>
 
@@ -119,10 +119,10 @@ body { margin:0; padding:0; background:#f2f2f2; font-family:Arial,sans-serif; di
 </div>
 
 <script>
-// بيانات تسجيل الدخول مؤقتة
+// Données de connexion temporaires
 const tempUser = { email: "test@example.com", password: "123456" };
 
-// تسجيل الدخول
+// Fonction de connexion
 function login() {
 const email = document.getElementById('email').value;
 const password = document.getElementById('password').value;
@@ -130,44 +130,68 @@ const msg = document.getElementById('loginMsg');
 if(email === tempUser.email && password === tempUser.password){
 document.getElementById('loginScreen').style.display = 'none';
 } else {
-msg.innerText = "البريد الإلكتروني أو كلمة السر غير صحيحة!";
+msg.innerText = "Email ou mot de passe incorrect!";
 }
 }
 
-// تعطيل زر الفأرة و Inspect Element
+// Désactivation du clic droit et de l'inspection
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('keydown', function(e) {
 if(e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J"))){ e.preventDefault(); }
 });
 
-// التحكم بالصفحات والأصوات
+// Contrôle des pages et des audios
 let pages = document.querySelectorAll('.page');
 let current = 0;
+
 function showPage(index){
 pages.forEach((p,i)=>{
 const audios = p.querySelectorAll('audio');
 if(i===index){
 p.classList.add('active');
-audios.forEach(a=>{ a.currentTime=0; a.play(); });
+audios.forEach(a=>{ 
+a.currentTime=0; 
+a.play().catch(e => console.log("Lecture automatique bloquée, nécessite une interaction utilisateur")); 
+});
 } else {
 p.classList.remove('active');
 audios.forEach(a=>a.pause());
 }
 });
 }
-document.getElementById('nextArrow').addEventListener('click',()=>{ if(current<pages.length-1) current++; showPage(current); });
-document.getElementById('prevArrow').addEventListener('click',()=>{ if(current>0) current--; showPage(current); });
 
-// التحكم باللمس
+// Navigation avec les flèches
+document.getElementById('nextArrow').addEventListener('click',()=>{ 
+if(current < pages.length-1) {
+current++; 
+showPage(current); 
+}
+});
+
+document.getElementById('prevArrow').addEventListener('click',()=>{ 
+if(current > 0) {
+current--; 
+showPage(current); 
+}
+});
+
+// Contrôle tactile
 let startY=0;
 const book=document.getElementById('book');
 book.addEventListener('touchstart',e=>{startY=e.touches[0].clientY});
 book.addEventListener('touchend',e=>{
 let endY=e.changedTouches[0].clientY;
-if(startY-endY>50 && current<pages.length-1){ current++; showPage(current);}
-if(endY-startY>50 && current>0){ current--; showPage(current);}
+if(startY-endY>50 && current<pages.length-1){ 
+current++; 
+showPage(current);
+}
+if(endY-startY>50 && current>0){ 
+current--; 
+showPage(current);
+}
 });
 
+// Initialisation
 document.addEventListener('DOMContentLoaded',()=>showPage(current));
 </script>
 </body>

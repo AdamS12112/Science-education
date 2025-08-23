@@ -5,33 +5,157 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Audiobook Ebook</title>
 <style>
-body { margin:0; padding:0; background:#f2f2f2; font-family:Arial,sans-serif; display:flex; justify-content:center; align-items:center; min-height:100vh; }
-#book { width:360px; height:640px; position:relative; overflow:hidden; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.5); }
-.page { width:100%; height:100%; background-size:cover; background-position:center; position:absolute; top:0; left:0; display:none; flex-direction:column; justify-content:flex-start; padding:10px; box-sizing:border-box; transition:opacity 0.6s ease; opacity:0; }
-.page.active { display:flex; opacity:1; }
-.page audio.audio-custom { 
-    position:absolute; left:50%; transform:translateX(-50%); z-index:10; width:90%;
-    /* إخفاء عناصر التحكم في التحميل */
-    --download-button: none;
+body { 
+    margin:0; 
+    padding:0; 
+    background: linear-gradient(135deg, #1a2f1a 0%, #2d5a2d 100%); 
+    font-family:Arial,sans-serif; 
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    min-height:100vh; 
 }
-.page audio.audio-custom::-webkit-media-controls-enclosure {
-    overflow: hidden;
+#book { 
+    width:360px; 
+    height:640px; 
+    position:relative; 
+    overflow:hidden; 
+    background:#fff; 
+    box-shadow:0 0 20px rgba(0,0,0,0.5); 
+    border-radius:15px;
+}
+.page { 
+    width:100%; 
+    height:100%; 
+    background-size:cover; 
+    background-position:center; 
+    position:absolute; 
+    top:0; 
+    left:0; 
+    display:none; 
+    flex-direction:column; 
+    justify-content:flex-start; 
+    padding:10px; 
+    box-sizing:border-box; 
+    transition:opacity 0.6s ease; 
+    opacity:0; 
+}
+.page.active { 
+    display:flex; 
+    opacity:1; 
+}
+.page audio.audio-custom { 
+    position:absolute; 
+    left:50%; 
+    transform:translateX(-50%); 
+    z-index:10; 
+    width:90%;
+    background: #2e7d32;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 .page audio.audio-custom::-webkit-media-controls-panel {
-    /* إزالة زر التحميل من لوحة التحكم */
-    filter: invert(100%); /* تغيير اللون للتمويه */
+    background: #4caf50;
 }
-.audio-speed { position:absolute; left:50%; transform:translateX(-50%); margin-top:5px; z-index:10; background:rgba(255,255,255,0.8); padding:5px; border-radius:5px; }
-.nav-arrow { position:absolute; top:50%; transform:translateY(-50%); font-size:32px; color:green; background:rgba(255,255,255,0.7); border-radius:50%; width:50px; height:50px; line-height:46px; text-align:center; cursor:pointer; user-select:none; z-index:1000; transition:background 0.3s; }
-.nav-arrow:hover { background:rgba(255,255,255,0.9); }
+.page audio.audio-custom::-webkit-media-controls-play-button {
+    background-color: #1b5e20;
+    border-radius: 50%;
+}
+.page audio.audio-custom::-webkit-media-controls-current-time-display,
+.page audio.audio-custom::-webkit-media-controls-time-remaining-display {
+    color: white;
+}
+.audio-speed { 
+    position:absolute; 
+    left:50%; 
+    transform:translateX(-50%); 
+    margin-top:5px; 
+    z-index:10; 
+    background:rgba(76, 175, 80, 0.9); 
+    padding:5px; 
+    border-radius:5px; 
+    color: white;
+    border: none;
+}
+.audio-speed option {
+    background: #4caf50;
+}
+.nav-arrow { 
+    position:absolute; 
+    top:50%; 
+    transform:translateY(-50%); 
+    font-size:32px; 
+    color:#1b5e20; 
+    background:rgba(255,255,255,0.9); 
+    border-radius:50%; 
+    width:50px; 
+    height:50px; 
+    line-height:46px; 
+    text-align:center; 
+    cursor:pointer; 
+    user-select:none; 
+    z-index:1000; 
+    transition:background 0.3s; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.nav-arrow:hover { 
+    background:rgba(255,255,255,1); 
+    transform: translateY(-50%) scale(1.1);
+}
 #prevArrow { left:10px; }
 #nextArrow { right:10px; }
-#loginScreen { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.95); display:flex; justify-content:center; align-items:center; flex-direction:column; z-index:9999; }
-#loginScreen h2 { color:#2c3e50; margin-bottom:20px; }
-#loginScreen input { margin:10px; padding:12px; font-size:16px; width:250px; border:1px solid #ddd; border-radius:4px; }
-#loginScreen button { padding:12px 25px; font-size:16px; cursor:pointer; background:#3498db; color:white; border:none; border-radius:4px; margin-top:10px; transition:background 0.3s; }
-#loginScreen button:hover { background:#2980b9; }
-.page-counter { position:absolute; bottom:15px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.6); color:white; padding:5px 10px; border-radius:15px; font-size:14px; z-index:100; }
+#loginScreen { 
+    position:fixed; 
+    top:0; 
+    left:0; 
+    width:100%; 
+    height:100%; 
+    background:rgba(255,255,255,0.95); 
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    flex-direction:column; 
+    z-index:9999; 
+}
+#loginScreen h2 { 
+    color:#2c3e50; 
+    margin-bottom:20px; 
+}
+#loginScreen input { 
+    margin:10px; 
+    padding:12px; 
+    font-size:16px; 
+    width:250px; 
+    border:1px solid #ddd; 
+    border-radius:4px; 
+}
+#loginScreen button { 
+    padding:12px 25px; 
+    font-size:16px; 
+    cursor:pointer; 
+    background:#4caf50; 
+    color:white; 
+    border:none; 
+    border-radius:4px; 
+    margin-top:10px; 
+    transition:background 0.3s; 
+}
+#loginScreen button:hover { 
+    background:#2e7d32; 
+}
+.page-counter { 
+    position:absolute; 
+    bottom:15px; 
+    left:50%; 
+    transform:translateX(-50%); 
+    background:rgba(0,0,0,0.6); 
+    color:white; 
+    padding:5px 10px; 
+    border-radius:15px; 
+    font-size:14px; 
+    z-index:100; 
+}
 /* منع تحديد النص وحق النقر لمنع خيارات التحميل */
 body {
     -webkit-touch-callout: none;
@@ -41,16 +165,33 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+.login-logo {
+    width: 100px;
+    height: 100px;
+    background: #4caf50;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.login-logo:before {
+    content: "♪";
+    font-size: 50px;
+    color: white;
+}
 </style>
 </head>
 <body>
 
 <div id="loginScreen">
-<h2>Connexion</h2>
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Mot de passe">
-<button onclick="login()">Se connecter</button>
-<p id="loginMsg" style="color:red;"></p>
+    <div class="login-logo"></div>
+    <h2>Connexion</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Mot de passe">
+    <button onclick="login()">Se connecter</button>
+    <p id="loginMsg" style="color:red;"></p>
 </div>
 
 <div id="book">
@@ -65,7 +206,7 @@ body {
     <div class="page-counter">Page 2/12</div>
 </div>
 <div class="page" id="Page3" style="background-image:url('Page3.jpg');">
-    <audio class="audio-custom" src="Chapitre1 Partie1.wav" controls style="top:350px;" controlsList="nodownload"></audio>
+    <audio class="audio-custom" src="Ch1.wav" controls style="top:350px;" controlsList="nodownload"></audio>
     <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value">
         <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
     </select>

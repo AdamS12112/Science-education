@@ -1,393 +1,584 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription - Audiobook Ebook</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 1000px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .header {
-            background: #3498db;
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-        
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-        
-        .content {
-            display: flex;
-            flex-wrap: wrap;
-            padding: 30px;
-        }
-        
-        .form-container {
-            flex: 1;
-            min-width: 300px;
-            padding: 20px;
-        }
-        
-        .users-container {
-            flex: 1;
-            min-width: 300px;
-            padding: 20px;
-            border-left: 1px solid #eee;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border 0.3s;
-        }
-        
-        .form-group input:focus {
-            border-color: #3498db;
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-        }
-        
-        .error {
-            color: #e74c3c;
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
-        }
-        
-        button {
-            width: 100%;
-            padding: 15px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        button:hover {
-            background: #2980b9;
-        }
-        
-        .users-list {
-            margin-top: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .user-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .user-info {
-            flex: 1;
-        }
-        
-        .user-email {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .user-password {
-            font-size: 14px;
-            color: #7f8c8d;
-            margin-top: 5px;
-        }
-        
-        .delete-btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 12px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        
-        .delete-btn:hover {
-            background: #c0392b;
-        }
-        
-        .success-message {
-            background: #2ecc71;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            text-align: center;
-            display: none;
-        }
-        
-        .actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .secondary-btn {
-            background: #95a5a6;
-        }
-        
-        .secondary-btn:hover {
-            background: #7f8c8d;
-        }
-        
-        @media (max-width: 768px) {
-            .content {
-                flex-direction: column;
-            }
-            
-            .users-container {
-                border-left: none;
-                border-top: 1px solid #eee;
-                margin-top: 30px;
-                padding-top: 30px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audiobook Ebook</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body { 
+    margin:0; 
+    padding:0; 
+    background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%); 
+    font-family: Arial, sans-serif; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+    overflow: hidden;
+}
+#book { 
+    width: 360px; 
+    height: 640px; 
+    position: relative; 
+    overflow: hidden; 
+    background: #fff; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.5); 
+    border-radius: 15px;
+    display: none;
+}
+.page { 
+    width: 100%; 
+    height: 100%; 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    display: none; 
+    flex-direction: column; 
+    justify-content: flex-start; 
+    padding: 10px; 
+    box-sizing: border-box; 
+    transition: opacity 0.6s ease; 
+    opacity: 0; 
+}
+.page.active { 
+    display: flex; 
+    opacity: 1; 
+}
+.page audio.audio-custom { 
+    position: absolute; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 10; 
+    width: 90%;
+    background: #2e7d32;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    margin-top: 10px;
+}
+.page audio.audio-custom::-webkit-media-controls-panel {
+    background: #4caf50;
+}
+.page audio.audio-custom::-webkit-media-controls-play-button {
+    background-color: #1b5e20;
+    border-radius: 50%;
+}
+.audio-speed { 
+    position: absolute; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    margin-top: 5px; 
+    z-index: 10; 
+    background: rgba(76, 175, 80, 0.9); 
+    padding: 5px; 
+    border-radius: 5px; 
+    color: white;
+    border: none;
+    width: 60px;
+    text-align: center;
+}
+.audio-speed option {
+    background: #4caf50;
+}
+.nav-arrow { 
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    font-size: 32px; 
+    color: #1b5e20; 
+    background: rgba(255,255,255,0.9); 
+    border-radius: 50%; 
+    width: 50px; 
+    height: 50px; 
+    line-height: 46px; 
+    text-align: center; 
+    cursor: pointer; 
+    user-select: none; 
+    z-index: 1000; 
+    transition: all 0.3s; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    font-weight: bold;
+}
+.nav-arrow:hover { 
+    background: rgba(255,255,255,1); 
+    transform: translateY(-50%) scale(1.1);
+}
+#prevArrow { left: 10px; }
+#nextArrow { right: 10px; }
+#loginScreen { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column; 
+    z-index: 9999; 
+}
+#loginScreen h2 { 
+    color: white; 
+    margin-bottom: 20px; 
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+.input-container {
+    position: relative;
+    width: 250px;
+    margin: 10px;
+}
+#loginScreen input { 
+    padding: 12px 40px 12px 12px; 
+    font-size: 16px; 
+    width: 100%; 
+    border: 1px solid #ddd; 
+    border-radius: 4px; 
+    background: rgba(255,255,255,0.9);
+}
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #2E7D32;
+    font-size: 18px;
+}
+#loginScreen button { 
+    padding: 12px 25px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    background: #4caf50; 
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+    margin-top: 10px; 
+    transition: all 0.3s; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    width: 250px;
+}
+#loginScreen button:hover { 
+    background: #2e7d32; 
+    transform: translateY(-2px);
+}
+.page-counter { 
+    position: absolute; 
+    bottom: 15px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    background: rgba(0,0,0,0.6); 
+    color: white; 
+    padding: 5px 10px; 
+    border-radius: 15px; 
+    font-size: 14px; 
+    z-index: 100; 
+}
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.login-logo {
+    width: 100px;
+    height: 100px;
+    background: #4caf50;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.login-logo:before {
+    content: "♪";
+    font-size: 50px;
+    color: white;
+}
+.login-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    text-align: center;
+    width: 320px;
+}
+.demo-note {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #2E7D32;
+    z-index: 1000;
+}
+.admin-panel {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 10000;
+    display: none;
+}
+.admin-btn {
+    background: #2E7D32;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.help-text {
+    color: white;
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+}
+.audio-info {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 11;
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>إضافة مستخدم جديد</h1>
-            <p>أضف مستخدمين جدد للوصول إلى الكتاب الصوتي التفاعلي</p>
+
+<div id="loginScreen">
+    <div class="login-container">
+        <div class="login-logo"></div>
+        <h2>Connexion</h2>
+        
+        <div class="input-container">
+            <input type="email" id="email" placeholder="Email" autocomplete="username">
         </div>
         
-        <div class="content">
-            <div class="form-container">
-                <h2>نموذج التسجيل</h2>
-                <div class="form-group">
-                    <label for="newEmail">البريد الإلكتروني:</label>
-                    <input type="email" id="newEmail" placeholder="example@email.com">
-                    <div class="error" id="emailError">يرجى إدخال بريد إلكتروني صحيح</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="newPassword">كلمة المرور:</label>
-                    <input type="password" id="newPassword" placeholder="كلمة المرور (6 أحرف على الأقل)">
-                    <div class="error" id="passwordError">كلمة المرور يجب أن تحتوي على 6 أحرف على الأقل</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="confirmPassword">تأكيد كلمة المرور:</label>
-                    <input type="password" id="confirmPassword" placeholder="أعد إدخال كلمة المرور">
-                    <div class="error" id="confirmError">كلمة المرور غير متطابقة</div>
-                </div>
-                
-                <button id="registerBtn">إضافة مستخدم</button>
-                
-                <div class="success-message" id="successMessage">
-                    تم إضافة المستخدم بنجاح!
-                </div>
-                
-                <div class="actions">
-                    <button class="secondary-btn" onclick="goToLogin()">العودة إلى تسجيل الدخول</button>
-                    <button class="secondary-btn" onclick="clearForm()">مسح النموذج</button>
-                </div>
-            </div>
-            
-            <div class="users-container">
-                <h2>المستخدمون المسجلون</h2>
-                <p>قائمة المستخدمين المسجلين في النظام:</p>
-                
-                <div class="users-list" id="usersList">
-                    <!-- سيتم ملء هذه القائمة بالمستخدمين عبر JavaScript -->
-                </div>
-            </div>
+        <div class="input-container">
+            <input type="password" id="password" placeholder="Mot de passe" autocomplete="current-password">
+            <button class="toggle-password" onclick="togglePassword()">👁️</button>
+        </div>
+        
+        <button onclick="login()">Se connecter</button>
+        <p id="loginMsg" style="color:white; background:rgba(255,0,0,0.5); padding:5px; border-radius:5px; margin-top: 10px;"></p>
+        
+        <div class="help-text">
+            <p>Contactez l'administrateur pour obtenir un compte</p>
         </div>
     </div>
+</div>
 
-    <script>
-        // بيانات المستخدمين (سيتم تخزينها في localStorage)
-        let users = JSON.parse(localStorage.getItem('audiobook_users')) || [];
+<div id="book">
+    <div class="demo-note">Démo - Les fichiers audio ne sont pas inclus</div>
+    
+    <div class="page active" id="Page1" style="background-color: #4caf50;">
+        <div style="text-align: center; padding-top: 50px; color: white;">
+            <h1>Livre Audio</h1>
+            <p style="margin-top: 20px;">Bienvenue dans votre livre audio interactif</p>
+            <div style="margin-top: 40px; font-size: 72px;">♪</div>
+            <p id="userWelcome" style="margin-top: 30px; font-style: italic;"></p>
+        </div>
+        <div class="page-counter">Page 1/12</div>
+    </div>
+    
+    <div class="page" id="Page2" style="background-color: #4caf50;">
+        <div class="audio-info" style="top: 310px;">Introduction</div>
+        <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
+        <div class="page-counter">Page 2/12</div>
+    </div>
+    
+    <div class="page" id="Page3" style="background-color: #4caf50;">
+        <div class="audio-info" style="top: 310px;">Chapitre 1</div>
+        <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
+        <div class="page-counter">Page 3/12</div>
+    </div>
+    
+    <div class="page" id="Page4" style="background-color: #4caf50;">
+        <div class="audio-info" style="top: 50px;">Section 1.1</div>
+        <audio class="audio-custom" controls style="top: 90px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 140px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
         
-        // عناصر DOM
-        const newEmailInput = document.getElementById('newEmail');
-        const newPasswordInput = document.getElementById('newPassword');
-        const confirmPasswordInput = document.getElementById('confirmPassword');
-        const registerBtn = document.getElementById('registerBtn');
-        const emailError = document.getElementById('emailError');
-        const passwordError = document.getElementById('passwordError');
-        const confirmError = document.getElementById('confirmError');
-        const successMessage = document.getElementById('successMessage');
-        const usersList = document.getElementById('usersList');
+        <div class="audio-info" style="top: 190px;">Section 1.2</div>
+        <audio class="audio-custom" controls style="top: 230px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 280px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
         
-        // تحميل المستخدمين عند بدء التشغيل
-        document.addEventListener('DOMContentLoaded', () => {
-            renderUsersList();
-        });
+        <div class="audio-info" style="top: 340px;">Section 1.3</div>
+        <audio class="audio-custom" controls style="top: 380px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 430px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
         
-        // إضافة مستخدم جديد
-        registerBtn.addEventListener('click', () => {
-            if (validateForm()) {
-                const newUser = {
-                    email: newEmailInput.value,
-                    password: newPasswordInput.value
-                };
-                
-                // التحقق إذا كان المستخدم موجوداً مسبقاً
-                if (users.some(user => user.email === newUser.email)) {
-                    emailError.textContent = 'هذا البريد الإلكتروني مسجل مسبقاً';
-                    emailError.style.display = 'block';
-                    return;
-                }
-                
-                users.push(newUser);
-                localStorage.setItem('audiobook_users', JSON.stringify(users));
-                
-                // إظهار رسالة النجاح
-                successMessage.style.display = 'block';
-                setTimeout(() => {
-                    successMessage.style.display = 'none';
-                }, 3000);
-                
-                // إعادة تعيين النموذج
-                clearForm();
-                
-                // تحديث قائمة المستخدمين
-                renderUsersList();
-            }
-        });
+        <div class="audio-info" style="top: 480px;">Section 1.4</div>
+        <audio class="audio-custom" controls style="top: 520px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 570px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
         
-        // التحقق من صحة البيانات
-        function validateForm() {
-            let isValid = true;
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            
-            // إخفاء جميع رسائل الخطأ أولاً
-            emailError.style.display = 'none';
-            passwordError.style.display = 'none';
-            confirmError.style.display = 'none';
-            
-            // التحقق من البريد الإلكتروني
-            if (!emailRegex.test(newEmailInput.value)) {
-                emailError.style.display = 'block';
-                isValid = false;
-            }
-            
-            // التحقق من كلمة المرور
-            if (newPasswordInput.value.length < 6) {
-                passwordError.style.display = 'block';
-                isValid = false;
-            }
-            
-            // التحقق من تطابق كلمة المرور
-            if (newPasswordInput.value !== confirmPasswordInput.value) {
-                confirmError.style.display = 'block';
-                isValid = false;
-            }
-            
-            return isValid;
-        }
+        <div class="page-counter">Page 4/12</div>
+    </div>
+    
+    <div class="page" id="Page5" style="background-color: #4caf50;">
+        <div class="audio-info" style="top: 310px;">Introduction Chapitre 2</div>
+        <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
+        <div class="page-counter">Page 5/12</div>
+    </div>
+    
+    <div class="page" id="Page6" style="background-color: #4caf50;">
+        <div class="audio-info" style="top: 110px;">Section 2.1</div>
+        <audio class="audio-custom" controls style="top: 150px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 200px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
         
-        // عرض قائمة المستخدمين
-        function renderUsersList() {
-            usersList.innerHTML = '';
-            
-            if (users.length === 0) {
-                usersList.innerHTML = '<p>لا يوجد مستخدمون مسجلون بعد</p>';
-                return;
-            }
-            
-            users.forEach((user, index) => {
-                const userCard = document.createElement('div');
-                userCard.className = 'user-card';
-                userCard.innerHTML = `
-                    <div class="user-info">
-                        <div class="user-email">${user.email}</div>
-                        <div class="user-password">كلمة المرور: ${user.password}</div>
-                    </div>
-                    <button class="delete-btn" onclick="deleteUser(${index})">حذف</button>
-                `;
-                usersList.appendChild(userCard);
+        <div class="audio-info" style="top: 410px;">Section 2.2</div>
+        <audio class="audio-custom" controls style="top: 450px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 500px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
+        
+        <div class="page-counter">Page 6/12</div>
+    </div>
+    
+    <div class="page" id="Page7" style="background-color: #4caf50;">
+        <div class="audio-info" style="top: 310px;">Introduction Chapitre 3</div>
+        <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
+        <div class="page-counter">Page 7/12</div>
+    </div>
+    
+    <div class="page" id="Page8" style="background-color: #4caf50;">
+        <div class="audio-info" style="top: 110px;">Section 3.1</div>
+        <audio class="audio-custom" controls style="top: 150px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 200px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
+        
+        <div class="audio-info" style="top: 410px;">Section 3.2</div>
+        <audio class="audio-custom" controls style="top: 450px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 500px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
+        
+        <div class="page-counter">Page 8/12</div>
+    </div>
+    
+    <div class="page" id="Page9" style="background-color: #4caf50;">
+        <div class="audio-info" style="top: 310px;">Introduction Chapitre 4</div>
+        <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
+        <div class="page-counter">Page 9/12</div>
+    </div>
+    
+    <div class="page" id="Page10" style="background-color: #4caf50;">
+        <div class="audio-info" style="top: 110px;">Section 4.1</div>
+        <audio class="audio-custom" controls style="top: 150px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 200px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
+        
+        <div class="audio-info" style="top: 410px;">Section 4.2</div>
+        <audio class="audio-custom" controls style="top: 450px;" controlsList="nodownload"></audio>
+        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 500px;">
+            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+        </select>
+        
+        <div class="page-counter">Page 10/12</div>
+    </div>
+    
+    <div class="page" id="Page11" style="background-color: #4caf50;">
+        <div style="text-align: center; padding-top: 50px; color: white;">
+            <h2>Chapitre 5</h2>
+            <p style="margin-top: 20px;">Contenu à venir</p>
+        </div>
+        <div class="page-counter">Page 11/12</div>
+    </div>
+    
+    <div class="page" id="Page12" style="background-color: #4caf50;">
+        <div style="text-align: center; padding-top: 50px; color: white;">
+            <h2>Fin du Livre</h2>
+            <p style="margin-top: 20px;">Merci d'avoir écouté</p>
+            <div style="margin-top: 40px; font-size: 72px;">✓</div>
+        </div>
+        <div class="page-counter">Page 12/12</div>
+    </div>
+
+    <div class="nav-arrow" id="prevArrow">‹</div>
+    <div class="nav-arrow" id="nextArrow">›</div>
+</div>
+
+<div class="admin-panel" id="adminPanel">
+    <button class="admin-btn" onclick="logout()">Déconnexion</button>
+</div>
+
+<script>
+// نظام إدارة المستخدمين
+let users = [
+    {
+        name: "Utilisateur Test",
+        email: "test@example.com",
+        password: "123456"
+    },
+    {
+        name: "Adam Smith",
+        email: "adamsmithcontact1@gmail.com",
+        password: "OMAR+222"
+    }
+];
+let currentUser = null;
+let currentPage = 0;
+let pages = [];
+
+// وظيفة إظهار/إخفاء كلمة المرور
+function togglePassword() {
+    const passwordInput = document.getElementById('password');
+    const toggleButton = document.querySelector('.toggle-password');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleButton.textContent = '🔒';
+    } else {
+        passwordInput.type = 'password';
+        toggleButton.textContent = '👁️';
+    }
+}
+
+// تسجيل الدخول
+function login() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const msg = document.getElementById('loginMsg');
+    
+    // البحث عن المستخدم
+    const user = users.find(u => u.email === email && u.password === password);
+    
+    if (user) {
+        currentUser = user;
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('book').style.display = 'block';
+        document.getElementById('adminPanel').style.display = 'block';
+        document.getElementById('userWelcome').innerText = `Bienvenue, ${user.name}!`;
+        
+        // تهيئة نظام الصفحات بعد تسجيل الدخول
+        initPageSystem();
+    } else {
+        msg.innerText = "Email ou mot de passe incorrect!";
+    }
+}
+
+// تسجيل الخروج
+function logout() {
+    currentUser = null;
+    document.getElementById('book').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('loginMsg').innerText = '';
+    
+    // إعادة تعيين نوع حقل كلمة المرور إلى النص المخفي
+    document.getElementById('password').type = 'password';
+    document.querySelector('.toggle-password').textContent = '👁️';
+}
+
+// تهيئة نظام الصفحات
+function initPageSystem() {
+    pages = document.querySelectorAll('.page');
+    currentPage = 0;
+    showPage(currentPage);
+    
+    // إضافة مستمعي الأحداث للأسهم
+    document.getElementById('nextArrow').addEventListener('click', nextPage);
+    document.getElementById('prevArrow').addEventListener('click', prevPage);
+}
+
+// الانتقال إلى الصفحة التالية
+function nextPage() {
+    if (currentPage < pages.length - 1) {
+        currentPage++;
+        showPage(currentPage);
+    }
+}
+
+// الانتقال إلى الصفحة السابقة
+function prevPage() {
+    if (currentPage > 0) {
+        currentPage--;
+        showPage(currentPage);
+    }
+}
+
+// عرض صفحة محددة
+function showPage(index) {
+    pages.forEach((page, i) => {
+        const audios = page.querySelectorAll('audio');
+        if (i === index) {
+            page.classList.add('active');
+            // إيقاف جميع التسجيلات عند تغيير الصفحة
+            audios.forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
             });
+        } else {
+            page.classList.remove('active');
         }
-        
-        // حذف مستخدم
-        function deleteUser(index) {
-            if (confirm('هل أنت متأكد من رغبتك في حذف هذا المستخدم؟')) {
-                users.splice(index, 1);
-                localStorage.setItem('audiobook_users', JSON.stringify(users));
-                renderUsersList();
-            }
-        }
-        
-        // مسح النموذج
-        function clearForm() {
-            newEmailInput.value = '';
-            newPasswordInput.value = '';
-            confirmPasswordInput.value = '';
-            
-            // إخفاء رسائل الخطأ
-            emailError.style.display = 'none';
-            passwordError.style.display = 'none';
-            confirmError.style.display = 'none';
-        }
-        
-        // الانتقال إلى صفحة تسجيل الدخول
-        function goToLogin() {
-            window.location.href = 'login.html'; // يجب أن تكون لديك صفحة تسجيل دخول
-        }
-        
-        // للانتقال إلى الكتاب الصوتي بعد التسجيل (لأغراض العرض)
-        function goToAudiobook() {
-            window.location.href = 'audiobook.html'; // يجب أن تكون لديك صفحة الكتاب الصوتي
-        }
-    </script>
+    });
+    
+    // تحديث عداد الصفحات
+    document.querySelectorAll('.page-counter').forEach((counter, i) => {
+        counter.textContent = `Page ${i + 1}/${pages.length}`;
+    });
+}
+
+// تهيئة الصفحة عند تحميل DOM
+document.addEventListener('DOMContentLoaded', () => {
+    // لا نقوم بتهيئة نظام الصفحات هنا لأنه سيتم تهيئته بعد تسجيل الدخول
+});
+</script>
 </body>
 </html>

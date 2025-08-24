@@ -3,34 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Audiobook Ebook</title>
+<title>Livre Audio Sécurisé</title>
 <style>
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+
 body { 
-    margin:0; 
-    padding:0; 
+    margin: 0; 
+    padding: 0; 
     background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%); 
-    font-family: Arial, sans-serif; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
     min-height: 100vh; 
     overflow: hidden;
 }
+
 #book { 
     width: 360px; 
     height: 640px; 
     position: relative; 
     overflow: hidden; 
     background: #fff; 
-    box-shadow: 0 0 20px rgba(0,0,0,0.5); 
-    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
+    border-radius: 20px;
     display: none;
 }
+
 .page { 
     width: 100%; 
     height: 100%; 
@@ -43,15 +46,17 @@ body {
     display: none; 
     flex-direction: column; 
     justify-content: flex-start; 
-    padding: 10px; 
+    padding: 20px; 
     box-sizing: border-box; 
-    transition: opacity 0.6s ease; 
+    transition: opacity 0.5s ease; 
     opacity: 0; 
 }
+
 .page.active { 
     display: flex; 
     opacity: 1; 
 }
+
 .page audio.audio-custom { 
     position: absolute; 
     left: 50%; 
@@ -59,60 +64,64 @@ body {
     z-index: 10; 
     width: 90%;
     background: #2e7d32;
-    border-radius: 10px;
-    padding: 5px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    margin-top: 10px;
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 15px;
 }
+
 .page audio.audio-custom::-webkit-media-controls-panel {
     background: #4caf50;
 }
-.page audio.audio-custom::-webkit-media-controls-play-button {
-    background-color: #1b5e20;
-    border-radius: 50%;
-}
+
 .audio-speed { 
     position: absolute; 
     left: 50%; 
     transform: translateX(-50%); 
-    margin-top: 5px; 
+    margin-top: 8px; 
     z-index: 10; 
     background: rgba(76, 175, 80, 0.9); 
-    padding: 5px; 
-    border-radius: 5px; 
+    padding: 8px; 
+    border-radius: 8px; 
     color: white;
     border: none;
-    width: 60px;
+    width: 70px;
     text-align: center;
+    font-size: 14px;
 }
+
 .audio-speed option {
     background: #4caf50;
 }
+
 .nav-arrow { 
     position: absolute; 
     top: 50%; 
     transform: translateY(-50%); 
-    font-size: 32px; 
+    font-size: 36px; 
     color: #1b5e20; 
-    background: rgba(255,255,255,0.9); 
+    background: rgba(255, 255, 255, 0.9); 
     border-radius: 50%; 
-    width: 50px; 
-    height: 50px; 
-    line-height: 46px; 
+    width: 60px; 
+    height: 60px; 
+    line-height: 56px; 
     text-align: center; 
     cursor: pointer; 
     user-select: none; 
     z-index: 1000; 
     transition: all 0.3s; 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     font-weight: bold;
 }
+
 .nav-arrow:hover { 
-    background: rgba(255,255,255,1); 
+    background: rgba(255, 255, 255, 1); 
     transform: translateY(-50%) scale(1.1);
 }
-#prevArrow { left: 10px; }
-#nextArrow { right: 10px; }
+
+#prevArrow { left: 15px; }
+#nextArrow { right: 15px; }
+
 #loginScreen { 
     position: fixed; 
     top: 0; 
@@ -126,64 +135,185 @@ body {
     flex-direction: column; 
     z-index: 9999; 
 }
+
 #loginScreen h2 { 
     color: white; 
-    margin-bottom: 20px; 
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    margin-bottom: 25px; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 28px;
 }
+
 .input-container {
     position: relative;
-    width: 250px;
-    margin: 10px;
+    width: 280px;
+    margin: 15px;
 }
+
 #loginScreen input { 
-    padding: 12px 40px 12px 12px; 
+    padding: 15px 45px 15px 15px; 
     font-size: 16px; 
     width: 100%; 
-    border: 1px solid #ddd; 
-    border-radius: 4px; 
-    background: rgba(255,255,255,0.9);
+    border: 2px solid #ddd; 
+    border-radius: 8px; 
+    background: rgba(255, 255, 255, 0.95);
+    transition: border-color 0.3s;
 }
+
+#loginScreen input:focus {
+    border-color: #4caf50;
+    outline: none;
+}
+
 .toggle-password {
     position: absolute;
-    right: 10px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
     cursor: pointer;
     color: #2E7D32;
-    font-size: 18px;
+    font-size: 20px;
 }
+
 #loginScreen button { 
-    padding: 12px 25px; 
-    font-size: 16px; 
+    padding: 15px 30px; 
+    font-size: 18px; 
     cursor: pointer; 
     background: #4caf50; 
     color: white; 
     border: none; 
-    border-radius: 4px; 
-    margin-top: 10px; 
+    border-radius: 8px; 
+    margin-top: 20px; 
     transition: all 0.3s; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    width: 250px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 280px;
+    font-weight: bold;
 }
+
 #loginScreen button:hover { 
     background: #2e7d32; 
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
+
 .page-counter { 
     position: absolute; 
-    bottom: 15px; 
+    bottom: 20px; 
     left: 50%; 
     transform: translateX(-50%); 
-    background: rgba(0,0,0,0.6); 
+    background: rgba(0, 0, 0, 0.7); 
     color: white; 
-    padding: 5px 10px; 
-    border-radius: 15px; 
+    padding: 8px 16px; 
+    border-radius: 20px; 
     font-size: 14px; 
     z-index: 100; 
+    font-weight: bold;
 }
+
+.login-logo {
+    width: 120px;
+    height: 120px;
+    background: #4caf50;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.login-logo:before {
+    content: "♪";
+    font-size: 60px;
+    color: white;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    width: 350px;
+}
+
+.help-text {
+    color: white;
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: center;
+    opacity: 0.9;
+}
+
+.admin-panel {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    display: none;
+}
+
+.admin-btn {
+    background: #2E7D32;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.admin-btn:hover {
+    background: #1b5e20;
+}
+
+.audio-info {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    z-index: 11;
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+}
+
+.demo-note {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #2E7D32;
+    z-index: 1000;
+    font-weight: bold;
+}
+
+/* منع التحديد والحق النقر */
 body {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -192,83 +322,30 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
-.login-logo {
-    width: 100px;
-    height: 100px;
-    background: #4caf50;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+/* تأثيرات للصفحات */
+.page-content {
+    text-align: center;
+    padding-top: 60px;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.page-title {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.page-description {
+    font-size: 16px;
+    margin-top: 20px;
+    line-height: 1.5;
+}
+
+.symbol-large {
+    font-size: 80px;
+    margin-top: 40px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-.login-logo:before {
-    content: "♪";
-    font-size: 50px;
-    color: white;
-}
-.login-container {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    text-align: center;
-    width: 320px;
-}
-.demo-note {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    color: #2E7D32;
-    z-index: 1000;
-}
-.admin-panel {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    z-index: 10000;
-    display: none;
-}
-.admin-btn {
-    background: #2E7D32;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-}
-.help-text {
-    color: white;
-    margin-top: 15px;
-    font-size: 14px;
-    text-align: center;
-}
-.audio-info {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    z-index: 11;
-    max-width: 90%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 </style>
 </head>
@@ -277,10 +354,10 @@ body {
 <div id="loginScreen">
     <div class="login-container">
         <div class="login-logo"></div>
-        <h2>Connexion</h2>
+        <h2>Connexion Sécurisée</h2>
         
         <div class="input-container">
-            <input type="email" id="email" placeholder="Email" autocomplete="username">
+            <input type="email" id="email" placeholder="Adresse email" autocomplete="username">
         </div>
         
         <div class="input-container">
@@ -289,28 +366,28 @@ body {
         </div>
         
         <button onclick="login()">Se connecter</button>
-        <p id="loginMsg" style="color:white; background:rgba(255,0,0,0.5); padding:5px; border-radius:5px; margin-top: 10px;"></p>
+        <p id="loginMsg" style="color:white; background:rgba(255,0,0,0.5); padding:8px; border-radius:6px; margin-top: 15px;"></p>
         
         <div class="help-text">
-            <p>Contactez l'administrateur pour obtenir un compte</p>
+            <p>Contactez l'administrateur pour obtenir un accès</p>
         </div>
     </div>
 </div>
 
 <div id="book">
-    <div class="demo-note">Démo - Les fichiers audio ne sont pas inclus</div>
+    <div class="demo-note">Version de démonstration - Contenu protégé</div>
     
     <div class="page active" id="Page1" style="background-color: #4caf50;">
-        <div style="text-align: center; padding-top: 50px; color: white;">
-            <h1>Livre Audio</h1>
-            <p style="margin-top: 20px;">Bienvenue dans votre livre audio interactif</p>
-            <div style="margin-top: 40px; font-size: 72px;">♪</div>
-            <p id="userWelcome" style="margin-top: 30px; font-style: italic;"></p>
+        <div class="page-content">
+            <h1 class="page-title">Livre Audio Premium</h1>
+            <p class="page-description">Découvrez une expérience audio immersive avec notre collection exclusive</p>
+            <div class="symbol-large">🎧</div>
+            <p id="userWelcome" style="margin-top: 30px; font-style: italic; font-size: 18px;"></p>
         </div>
         <div class="page-counter">Page 1/12</div>
     </div>
     
-    <div class="page" id="Page2" style="background-color: #4caf50;">
+    <div class="page" id="Page2" style="background: linear-gradient(to bottom, #4caf50, #2E7D32);">
         <div class="audio-info" style="top: 310px;">Introduction</div>
         <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
@@ -319,7 +396,7 @@ body {
         <div class="page-counter">Page 2/12</div>
     </div>
     
-    <div class="page" id="Page3" style="background-color: #4caf50;">
+    <div class="page" id="Page3" style="background: linear-gradient(to bottom, #4caf50, #2E7D32);">
         <div class="audio-info" style="top: 310px;">Chapitre 1</div>
         <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
@@ -328,122 +405,14 @@ body {
         <div class="page-counter">Page 3/12</div>
     </div>
     
-    <div class="page" id="Page4" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 50px;">Section 1.1</div>
-        <audio class="audio-custom" controls style="top: 90px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 140px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        
-        <div class="audio-info" style="top: 190px;">Section 1.2</div>
-        <audio class="audio-custom" controls style="top: 230px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 280px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        
-        <div class="audio-info" style="top: 340px;">Section 1.3</div>
-        <audio class="audio-custom" controls style="top: 380px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 430px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        
-        <div class="audio-info" style="top: 480px;">Section 1.4</div>
-        <audio class="audio-custom" controls style="top: 520px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 570px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        
-        <div class="page-counter">Page 4/12</div>
-    </div>
+    <!-- المزيد من الصفحات هنا -->
     
-    <div class="page" id="Page5" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 310px;">Introduction Chapitre 2</div>
-        <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        <div class="page-counter">Page 5/12</div>
-    </div>
-    
-    <div class="page" id="Page6" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 110px;">Section 2.1</div>
-        <audio class="audio-custom" controls style="top: 150px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 200px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        
-        <div class="audio-info" style="top: 410px;">Section 2.2</div>
-        <audio class="audio-custom" controls style="top: 450px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 500px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        
-        <div class="page-counter">Page 6/12</div>
-    </div>
-    
-    <div class="page" id="Page7" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 310px;">Introduction Chapitre 3</div>
-        <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        <div class="page-counter">Page 7/12</div>
-    </div>
-    
-    <div class="page" id="Page8" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 110px;">Section 3.1</div>
-        <audio class="audio-custom" controls style="top: 150px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 200px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        
-        <div class="audio-info" style="top: 410px;">Section 3.2</div>
-        <audio class="audio-custom" controls style="top: 450px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 500px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        
-        <div class="page-counter">Page 8/12</div>
-    </div>
-    
-    <div class="page" id="Page9" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 310px;">Introduction Chapitre 4</div>
-        <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        <div class="page-counter">Page 9/12</div>
-    </div>
-    
-    <div class="page" id="Page10" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 110px;">Section 4.1</div>
-        <audio class="audio-custom" controls style="top: 150px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 200px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        
-        <div class="audio-info" style="top: 410px;">Section 4.2</div>
-        <audio class="audio-custom" controls style="top: 450px;" controlsList="nodownload"></audio>
-        <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 500px;">
-            <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
-        </select>
-        
-        <div class="page-counter">Page 10/12</div>
-    </div>
-    
-    <div class="page" id="Page11" style="background-color: #4caf50;">
-        <div style="text-align: center; padding-top: 50px; color: white;">
-            <h2>Chapitre 5</h2>
-            <p style="margin-top: 20px;">Contenu à venir</p>
-        </div>
-        <div class="page-counter">Page 11/12</div>
-    </div>
-    
-    <div class="page" id="Page12" style="background-color: #4caf50;">
-        <div style="text-align: center; padding-top: 50px; color: white;">
-            <h2>Fin du Livre</h2>
-            <p style="margin-top: 20px;">Merci d'avoir écouté</p>
-            <div style="margin-top: 40px; font-size: 72px;">✓</div>
+    <div class="page" id="Page12" style="background: linear-gradient(to bottom, #4caf50, #2E7D32);">
+        <div class="page-content">
+            <h2 class="page-title">Fin de la Lecture</h2>
+            <p class="page-description">Merci d'avoir exploré notre collection audio exclusive</p>
+            <div class="symbol-large">✓</div>
+            <p style="margin-top: 30px;">Revenez bientôt pour découvrir de nouveaux contenus</p>
         </div>
         <div class="page-counter">Page 12/12</div>
     </div>
@@ -502,12 +471,12 @@ function login() {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('book').style.display = 'block';
         document.getElementById('adminPanel').style.display = 'block';
-        document.getElementById('userWelcome').innerText = `Bienvenue, ${user.name}!`;
+        document.getElementById('userWelcome').innerText = `Bienvenue, ${user.name} !`;
         
         // تهيئة نظام الصفحات بعد تسجيل الدخول
         initPageSystem();
     } else {
-        msg.innerText = "Email ou mot de passe incorrect!";
+        msg.innerText = "Email ou mot de passe incorrect !";
     }
 }
 
@@ -535,6 +504,18 @@ function initPageSystem() {
     // إضافة مستمعي الأحداث للأسهم
     document.getElementById('nextArrow').addEventListener('click', nextPage);
     document.getElementById('prevArrow').addEventListener('click', prevPage);
+    
+    // إضافة مستمع الأحداث لأزرار لوحة المفاتيح
+    document.addEventListener('keydown', handleKeyDown);
+}
+
+// معالجة ضغطات لوحة المفاتيح
+function handleKeyDown(e) {
+    if (e.key === 'ArrowRight') {
+        nextPage();
+    } else if (e.key === 'ArrowLeft') {
+        prevPage();
+    }
 }
 
 // الانتقال إلى الصفحة التالية
@@ -574,6 +555,14 @@ function showPage(index) {
         counter.textContent = `Page ${i + 1}/${pages.length}`;
     });
 }
+
+// منع الحق النقر وفتح أدوات المطورين
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', function(e) {
+    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J"))) { 
+        e.preventDefault(); 
+    }
+});
 
 // تهيئة الصفحة عند تحميل DOM
 document.addEventListener('DOMContentLoaded', () => {

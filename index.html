@@ -218,6 +218,21 @@ body {
     text-align: center;
     width: 320px;
 }
+.audio-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 11;
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .demo-note {
     position: absolute;
     top: 10px;
@@ -238,7 +253,6 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     z-index: 10000;
-    display: none;
 }
 .admin-btn {
     background: #2E7D32;
@@ -249,26 +263,13 @@ body {
     cursor: pointer;
     font-size: 14px;
 }
-.help-text {
+.user-info {
     color: white;
     margin-top: 15px;
     font-size: 14px;
-    text-align: center;
-}
-.audio-info {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    z-index: 11;
-    max-width: 90%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 5px;
 }
 </style>
 </head>
@@ -280,19 +281,21 @@ body {
         <h2>Connexion</h2>
         
         <div class="input-container">
-            <input type="email" id="email" placeholder="Email" autocomplete="username">
+            <input type="email" id="email" placeholder="Email">
         </div>
         
         <div class="input-container">
-            <input type="password" id="password" placeholder="Mot de passe" autocomplete="current-password">
+            <input type="password" id="password" placeholder="Mot de passe">
             <button class="toggle-password" onclick="togglePassword()">👁️</button>
         </div>
         
         <button onclick="login()">Se connecter</button>
         <p id="loginMsg" style="color:white; background:rgba(255,0,0,0.5); padding:5px; border-radius:5px; margin-top: 10px;"></p>
         
-        <div class="help-text">
-            <p>Contactez l'administrateur pour obtenir un compte</p>
+        <div class="user-info">
+            <p>Utilisateurs disponibles:</p>
+            <p>• test@example.com / 123456</p>
+            <p>• adamsmithcontact1@gmail.com / OMAR+222</p>
         </div>
     </div>
 </div>
@@ -311,7 +314,7 @@ body {
     </div>
     
     <div class="page" id="Page2" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 310px;">Introduction</div>
+        <div class="audio-title" style="top: 310px;">P1 intro.wav</div>
         <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
@@ -320,7 +323,7 @@ body {
     </div>
     
     <div class="page" id="Page3" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 310px;">Chapitre 1</div>
+        <div class="audio-title" style="top: 310px;">Ch1.wav</div>
         <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
@@ -329,25 +332,25 @@ body {
     </div>
     
     <div class="page" id="Page4" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 50px;">Section 1.1</div>
+        <div class="audio-title" style="top: 50px;">Axe1 ch1.wav</div>
         <audio class="audio-custom" controls style="top: 90px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 140px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
         </select>
         
-        <div class="audio-info" style="top: 190px;">Section 1.2</div>
+        <div class="audio-title" style="top: 190px;">Axe2 ch1.wav</div>
         <audio class="audio-custom" controls style="top: 230px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 280px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
         </select>
         
-        <div class="audio-info" style="top: 340px;">Section 1.3</div>
+        <div class="audio-title" style="top: 340px;">Axe3 ch1.wav</div>
         <audio class="audio-custom" controls style="top: 380px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 430px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
         </select>
         
-        <div class="audio-info" style="top: 480px;">Section 1.4</div>
+        <div class="audio-title" style="top: 480px;">Axe4 ch1.wav</div>
         <audio class="audio-custom" controls style="top: 520px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 570px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
@@ -357,7 +360,7 @@ body {
     </div>
     
     <div class="page" id="Page5" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 310px;">Introduction Chapitre 2</div>
+        <div class="audio-title" style="top: 310px;">Ch2 intro.wav</div>
         <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
@@ -366,13 +369,13 @@ body {
     </div>
     
     <div class="page" id="Page6" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 110px;">Section 2.1</div>
+        <div class="audio-title" style="top: 110px;">Axe1 ch2.wav</div>
         <audio class="audio-custom" controls style="top: 150px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 200px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
         </select>
         
-        <div class="audio-info" style="top: 410px;">Section 2.2</div>
+        <div class="audio-title" style="top: 410px;">Axe2 ch2.wav</div>
         <audio class="audio-custom" controls style="top: 450px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 500px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
@@ -382,7 +385,7 @@ body {
     </div>
     
     <div class="page" id="Page7" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 310px;">Introduction Chapitre 3</div>
+        <div class="audio-title" style="top: 310px;">ch3 intro.wav</div>
         <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
@@ -391,13 +394,13 @@ body {
     </div>
     
     <div class="page" id="Page8" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 110px;">Section 3.1</div>
+        <div class="audio-title" style="top: 110px;">Axe1 ch3.wav</div>
         <audio class="audio-custom" controls style="top: 150px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 200px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
         </select>
         
-        <div class="audio-info" style="top: 410px;">Section 3.2</div>
+        <div class="audio-title" style="top: 410px;">Axe2 ch3.wav</div>
         <audio class="audio-custom" controls style="top: 450px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 500px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
@@ -407,7 +410,7 @@ body {
     </div>
     
     <div class="page" id="Page9" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 310px;">Introduction Chapitre 4</div>
+        <div class="audio-title" style="top: 310px;">Chapitre4 intro.wav</div>
         <audio class="audio-custom" controls style="top: 350px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 400px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
@@ -416,13 +419,13 @@ body {
     </div>
     
     <div class="page" id="Page10" style="background-color: #4caf50;">
-        <div class="audio-info" style="top: 110px;">Section 4.1</div>
+        <div class="audio-title" style="top: 110px;">Axe1 ch4.wav</div>
         <audio class="audio-custom" controls style="top: 150px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 200px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
         </select>
         
-        <div class="audio-info" style="top: 410px;">Section 4.2</div>
+        <div class="audio-title" style="top: 410px;">Axe2 ch4.wav</div>
         <audio class="audio-custom" controls style="top: 450px;" controlsList="nodownload"></audio>
         <select class="audio-speed" onchange="this.previousElementSibling.playbackRate=this.value" style="top: 500px;">
             <option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="1.5">1.5x</option><option value="2">2x</option>
@@ -452,7 +455,7 @@ body {
     <div class="nav-arrow" id="nextArrow">›</div>
 </div>
 
-<div class="admin-panel" id="adminPanel">
+<div class="admin-panel">
     <button class="admin-btn" onclick="logout()">Déconnexion</button>
 </div>
 
@@ -499,7 +502,6 @@ function login() {
         currentUser = user;
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('book').style.display = 'block';
-        document.getElementById('adminPanel').style.display = 'block';
         document.getElementById('userWelcome').innerText = `Bienvenue, ${user.name}!`;
     } else {
         msg.innerText = "Email ou mot de passe incorrect!";
@@ -510,7 +512,6 @@ function login() {
 function logout() {
     currentUser = null;
     document.getElementById('book').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'none';
     document.getElementById('loginScreen').style.display = 'flex';
     document.getElementById('email').value = '';
     document.getElementById('password').value = '';
@@ -521,47 +522,46 @@ function logout() {
     document.querySelector('.toggle-password').textContent = '👁️';
 }
 
+// باقي الكود الخاص بالكتاب والصفحات
+let pages = document.querySelectorAll('.page');
+let currentPage = 0;
+
+function showPage(index){
+    pages.forEach((p, i) => {
+        const audios = p.querySelectorAll('audio');
+        if(i === index){
+            p.classList.add('active');
+            audios.forEach(a => {
+                a.pause();
+                a.currentTime = 0;
+            });
+        } else {
+            p.classList.remove('active');
+            audios.forEach(a => a.pause());
+        }
+    });
+    
+    document.querySelectorAll('.page-counter').forEach((counter, i) => {
+        counter.textContent = `Page ${i+1}/12`;
+    });
+}
+
+document.getElementById('nextArrow').addEventListener('click',() => { 
+    if(currentPage < pages.length-1) {
+        currentPage++; 
+        showPage(currentPage); 
+    }
+});
+
+document.getElementById('prevArrow').addEventListener('click',() => { 
+    if(currentPage > 0) {
+        currentPage--; 
+        showPage(currentPage); 
+    }
+});
+
 // تهيئة الصفحة الأولى
 document.addEventListener('DOMContentLoaded', () => {
-    // تهيئة متغير الصفحات بعد تحميل DOM
-    let pages = document.querySelectorAll('.page');
-    let currentPage = 0;
-
-    function showPage(index){
-        pages.forEach((p, i) => {
-            const audios = p.querySelectorAll('audio');
-            if(i === index){
-                p.classList.add('active');
-                audios.forEach(a => {
-                    a.pause();
-                    a.currentTime = 0;
-                });
-            } else {
-                p.classList.remove('active');
-                audios.forEach(a => a.pause());
-            }
-        });
-        
-        document.querySelectorAll('.page-counter').forEach((counter, i) => {
-            counter.textContent = `Page ${i+1}/12`;
-        });
-    }
-
-    document.getElementById('nextArrow').addEventListener('click',() => { 
-        if(currentPage < pages.length-1) {
-            currentPage++; 
-            showPage(currentPage); 
-        }
-    });
-
-    document.getElementById('prevArrow').addEventListener('click',() => { 
-        if(currentPage > 0) {
-            currentPage--; 
-            showPage(currentPage); 
-        }
-    });
-
-    // إظهار الصفحة الأولى
     showPage(currentPage);
 });
 </script>

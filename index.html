@@ -29,7 +29,7 @@ body {
     background: #fff; 
     box-shadow: 0 0 20px rgba(0,0,0,0.5); 
     border-radius: 15px;
-    display: none;
+    display: none; /* سيتم إظهاره بعد التسجيل */
 }
 .page { 
     width: 100%; 
@@ -253,6 +253,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     z-index: 10000;
+    display: none; /* سيتم إظهاره بعد التسجيل */
 }
 .admin-btn {
     background: #2E7D32;
@@ -263,13 +264,11 @@ body {
     cursor: pointer;
     font-size: 14px;
 }
-.user-info {
+.help-text {
     color: white;
     margin-top: 15px;
     font-size: 14px;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 10px;
-    border-radius: 5px;
+    text-align: center;
 }
 </style>
 </head>
@@ -281,21 +280,19 @@ body {
         <h2>Connexion</h2>
         
         <div class="input-container">
-            <input type="email" id="email" placeholder="Email">
+            <input type="email" id="email" placeholder="Email" autocomplete="username">
         </div>
         
         <div class="input-container">
-            <input type="password" id="password" placeholder="Mot de passe">
+            <input type="password" id="password" placeholder="Mot de passe" autocomplete="current-password">
             <button class="toggle-password" onclick="togglePassword()">👁️</button>
         </div>
         
         <button onclick="login()">Se connecter</button>
         <p id="loginMsg" style="color:white; background:rgba(255,0,0,0.5); padding:5px; border-radius:5px; margin-top: 10px;"></p>
         
-        <div class="user-info">
-            <p>Utilisateurs disponibles:</p>
-            <p>• test@example.com / 123456</p>
-            <p>• adamsmithcontact1@gmail.com / OMAR+222</p>
+        <div class="help-text">
+            <p>Contactez l'administrateur pour obtenir un compte</p>
         </div>
     </div>
 </div>
@@ -502,6 +499,7 @@ function login() {
         currentUser = user;
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('book').style.display = 'block';
+        document.getElementById('admin-panel').style.display = 'block';
         document.getElementById('userWelcome').innerText = `Bienvenue, ${user.name}!`;
     } else {
         msg.innerText = "Email ou mot de passe incorrect!";
@@ -512,6 +510,7 @@ function login() {
 function logout() {
     currentUser = null;
     document.getElementById('book').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'none';
     document.getElementById('loginScreen').style.display = 'flex';
     document.getElementById('email').value = '';
     document.getElementById('password').value = '';
@@ -522,46 +521,47 @@ function logout() {
     document.querySelector('.toggle-password').textContent = '👁️';
 }
 
-// باقي الكود الخاص بالكتاب والصفحات
-let pages = document.querySelectorAll('.page');
-let currentPage = 0;
-
-function showPage(index){
-    pages.forEach((p, i) => {
-        const audios = p.querySelectorAll('audio');
-        if(i === index){
-            p.classList.add('active');
-            audios.forEach(a => {
-                a.pause();
-                a.currentTime = 0;
-            });
-        } else {
-            p.classList.remove('active');
-            audios.forEach(a => a.pause());
-        }
-    });
-    
-    document.querySelectorAll('.page-counter').forEach((counter, i) => {
-        counter.textContent = `Page ${i+1}/12`;
-    });
-}
-
-document.getElementById('nextArrow').addEventListener('click',() => { 
-    if(currentPage < pages.length-1) {
-        currentPage++; 
-        showPage(currentPage); 
-    }
-});
-
-document.getElementById('prevArrow').addEventListener('click',() => { 
-    if(currentPage > 0) {
-        currentPage--; 
-        showPage(currentPage); 
-    }
-});
-
 // تهيئة الصفحة الأولى
 document.addEventListener('DOMContentLoaded', () => {
+    // تهيئة متغير الصفحات بعد تحميل DOM
+    let pages = document.querySelectorAll('.page');
+    let currentPage = 0;
+
+    function showPage(index){
+        pages.forEach((p, i) => {
+            const audios = p.querySelectorAll('audio');
+            if(i === index){
+                p.classList.add('active');
+                audios.forEach(a => {
+                    a.pause();
+                    a.currentTime = 0;
+                });
+            } else {
+                p.classList.remove('active');
+                audios.forEach(a => a.pause());
+            }
+        });
+        
+        document.querySelectorAll('.page-counter').forEach((counter, i) => {
+            counter.textContent = `Page ${i+1}/12`;
+        });
+    }
+
+    document.getElementById('nextArrow').addEventListener('click',() => { 
+        if(currentPage < pages.length-1) {
+            currentPage++; 
+            showPage(currentPage); 
+        }
+    });
+
+    document.getElementById('prevArrow').addEventListener('click',() => { 
+        if(currentPage > 0) {
+            currentPage--; 
+            showPage(currentPage); 
+        }
+    });
+
+    // إظهار الصفحة الأولى
     showPage(currentPage);
 });
 </script>
